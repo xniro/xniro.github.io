@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why I still use the terminal for everything"
-date: 2025-03-30
+date: 2025-03-15
 tags: [terminal, tools, workflow]
 ---
 
