@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Why I still use the terminal for everything"
-date: 2025-03-15
-tags: [terminal, tools, workflow]
+title: "Spec Driver AI Development is my new workflow"
+date: 2025-03-30
+tags: [PRD, TASK LIST, AI]
 ---
 
 There's a certain kind of programmer who, given the choice between a polished GUI and a blinking cursor, will always reach for the latter. I am that programmer, and I've been trying to figure out why.
