@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +16,7 @@
 
   {% seo %}
 </head>
+
 <body>
 
   <div class="site-wrapper">
@@ -32,8 +34,9 @@
           <span class="cursor"></span>
         </div>
 
-        <div class="author-avatar">
-          {{ site.author.name | split: ' ' | map: 'first' | join: '' | slice: 0, 2 | upcase }}
+        <div class="author-avatar" style="padding:0; overflow:hidden;">
+          <img src="{{ '/assets/images/avatar.jpg' | relative_url }}" alt="{{ site.author.name }}"
+            style="width:100%; height:100%; object-fit:cover; display:block;" />
         </div>
         <div class="author-name">{{ site.author.name }}</div>
         <div class="author-bio">{{ site.author.bio }}</div>
@@ -43,38 +46,32 @@
       <nav class="sidebar-nav" aria-label="Main navigation">
         <div class="nav-section-label">navigate</div>
 
-        <a href="{{ '/#about' | relative_url }}"
-           class="nav-item {% if page.url == '/' %}active{% endif %}">
+        <a href="{{ '/#about' | relative_url }}" class="nav-item {% if page.url == '/' %}active{% endif %}">
           <span class="nav-icon">~</span> about
         </a>
 
-        <a href="{{ '/#projects' | relative_url }}"
-           class="nav-item">
+        <a href="{{ '/#projects' | relative_url }}" class="nav-item">
           <span class="nav-icon">▸</span> projects
         </a>
 
-        <a href="{{ '/#blog' | relative_url }}"
-           class="nav-item {% if page.layout == 'post' %}active{% endif %}">
+        <a href="{{ '/#blog' | relative_url }}" class="nav-item {% if page.layout == 'post' %}active{% endif %}">
           <span class="nav-icon">§</span> blog
         </a>
 
-        <a href="{{ '/#contact' | relative_url }}"
-           class="nav-item">
+        <a href="{{ '/#contact' | relative_url }}" class="nav-item">
           <span class="nav-icon">@</span> contact
         </a>
 
         <div class="nav-section-label">links</div>
 
         {% if site.github_username %}
-        <a href="https://github.com/{{ site.github_username }}"
-           class="nav-item" target="_blank" rel="noopener">
+        <a href="https://github.com/{{ site.github_username }}" class="nav-item" target="_blank" rel="noopener">
           <span class="nav-icon">⎇</span> github
         </a>
         {% endif %}
 
         {% if site.twitter_username %}
-        <a href="https://twitter.com/{{ site.twitter_username }}"
-           class="nav-item" target="_blank" rel="noopener">
+        <a href="https://twitter.com/{{ site.twitter_username }}" class="nav-item" target="_blank" rel="noopener">
           <span class="nav-icon">↗</span> twitter
         </a>
         {% endif %}
@@ -102,57 +99,58 @@
 
   </div><!-- /.site-wrapper -->
 
-<script>
-  // Live clock
-  function tick() {
-    const el = document.getElementById('js-time');
-    if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
-  }
-  tick();
-  setInterval(tick, 1000);
+  <script>
+    // Live clock
+    function tick() {
+      const el = document.getElementById('js-time');
+      if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
+    }
+    tick();
+    setInterval(tick, 1000);
 
-  // Uptime counter
-  const start = Date.now();
-  setInterval(() => {
-    const el = document.getElementById('js-uptime');
-    if (!el) return;
-    const s = Math.floor((Date.now() - start) / 1000);
-    const h = String(Math.floor(s / 3600)).padStart(2,'0');
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2,'0');
-    const sec = String(s % 60).padStart(2,'0');
-    el.textContent = `${h}:${m}:${sec}`;
-  }, 1000);
+    // Uptime counter
+    const start = Date.now();
+    setInterval(() => {
+      const el = document.getElementById('js-uptime');
+      if (!el) return;
+      const s = Math.floor((Date.now() - start) / 1000);
+      const h = String(Math.floor(s / 3600)).padStart(2, '0');
+      const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+      const sec = String(s % 60).padStart(2, '0');
+      el.textContent = `${h}:${m}:${sec}`;
+    }, 1000);
 
-  // Section switching
-  const sections = ['about', 'projects', 'blog', 'contact'];
+    // Section switching
+    const sections = ['about', 'projects', 'blog', 'contact'];
 
-  function showSection(id) {
-    sections.forEach(s => {
-      const el = document.getElementById(s);
-      if (el) el.style.display = s === id ? '' : 'none';
-    });
+    function showSection(id) {
+      sections.forEach(s => {
+        const el = document.getElementById(s);
+        if (el) el.style.display = s === id ? '' : 'none';
+      });
+      document.querySelectorAll('.nav-item').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href').includes('#' + id));
+      });
+      window.location.hash = id;
+    }
+
+    // Wire up nav clicks
     document.querySelectorAll('.nav-item').forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href').includes('#' + id));
+      const hash = a.getAttribute('href');
+      if (!hash || !hash.includes('#')) return;
+      const id = hash.split('#')[1];
+      if (!sections.includes(id)) return;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        showSection(id);
+      });
     });
-    window.location.hash = id;
-  }
 
-  // Wire up nav clicks
-  document.querySelectorAll('.nav-item').forEach(a => {
-    const hash = a.getAttribute('href');
-    if (!hash || !hash.includes('#')) return;
-    const id = hash.split('#')[1];
-    if (!sections.includes(id)) return;
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      showSection(id);
-    });
-  });
-
-  // Show correct section on load (from URL hash or default to about)
-  const initial = window.location.hash.replace('#', '');
-  showSection(sections.includes(initial) ? initial : 'about');
-</script>
+    // Show correct section on load (from URL hash or default to about)
+    const initial = window.location.hash.replace('#', '');
+    showSection(sections.includes(initial) ? initial : 'about');
+  </script>
 
 </body>
+
 </html>
