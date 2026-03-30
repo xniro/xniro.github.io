@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div class="cmd-echo">cat _posts/{{ page.date | date: "%Y-%m-%d" }}-{{ page.slug }}.md</div>
+
+<div class="section-heading">
+  <span class="section-title">{{ page.title }}</span>
+</div>
+
+<div class="output-block">
+  <p style="font-size:0.7rem; color: var(--text-dim); margin-bottom:1.5rem;">
+    posted {{ page.date | date: "%Y-%m-%d" }}
+    {% if page.tags %}
+    &nbsp;·&nbsp;
+    {% for tag in page.tags %}
+    <span style="color:var(--amber-muted)">#{{ tag }}</span>{% unless forloop.last %} {% endunless %}
+    {% endfor %}
+    {% endif %}
+  </p>
+
+  <article class="post-content">
+    {{ content }}
+  </article>
+
+  <p style="margin-top:2rem;">
+    <a href="{{ '/#blog' | relative_url }}"
+       style="color:var(--amber-dim); font-size:0.75rem; text-decoration:none;">
+      ← cd ../blog
+    </a>
+  </p>
+</div>

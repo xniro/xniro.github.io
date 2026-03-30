@@ -1,0 +1,32 @@
+title: "user@localhost"
+description: "Developer, builder, thinker."
+email: "you@example.com"
+github_username: "yourusername"
+twitter_username: "yourusername"
+
+author:
+  name: "Nik Rosales"
+  bio: "Software engineer & open source contributor. Building things at the intersection of systems and product."
+  location: "San Francisco, CA"
+
+# Build settings
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name
+
+permalink: /blog/:year/:month/:day/:title/
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules

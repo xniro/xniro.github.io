@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}" />
+
+  <!-- Monospace font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+
+  {% seo %}
+</head>
+<body>
+
+  <div class="site-wrapper">
+
+    <!-- ── SIDEBAR ──────────────────────────────── -->
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+        <div class="prompt-line">
+          <span class="prompt-user">{{ site.author.name | split: ' ' | first | downcase }}</span>
+          <span class="prompt-at">@</span>
+          <span class="prompt-host">{{ site.title }}</span>
+          <span class="prompt-sep">:</span>
+          <span class="prompt-path">~</span>
+          <span class="cursor"></span>
+        </div>
+
+        <div class="author-avatar">
+          {{ site.author.name | split: ' ' | map: 'first' | join: '' | slice: 0, 2 | upcase }}
+        </div>
+        <div class="author-name">{{ site.author.name }}</div>
+        <div class="author-bio">{{ site.author.bio }}</div>
+        <div class="author-location">{{ site.author.location }}</div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <div class="nav-section-label">navigate</div>
+
+        <a href="{{ '/#about' | relative_url }}"
+           class="nav-item {% if page.url == '/' %}active{% endif %}">
+          <span class="nav-icon">~</span> about
+        </a>
+
+        <a href="{{ '/#projects' | relative_url }}"
+           class="nav-item">
+          <span class="nav-icon">▸</span> projects
+        </a>
+
+        <a href="{{ '/#blog' | relative_url }}"
+           class="nav-item {% if page.layout == 'post' %}active{% endif %}">
+          <span class="nav-icon">§</span> blog
+        </a>
+
+        <a href="{{ '/#contact' | relative_url }}"
+           class="nav-item">
+          <span class="nav-icon">@</span> contact
+        </a>
+
+        <div class="nav-section-label">links</div>
+
+        {% if site.github_username %}
+        <a href="https://github.com/{{ site.github_username }}"
+           class="nav-item" target="_blank" rel="noopener">
+          <span class="nav-icon">⎇</span> github
+        </a>
+        {% endif %}
+
+        {% if site.twitter_username %}
+        <a href="https://twitter.com/{{ site.twitter_username }}"
+           class="nav-item" target="_blank" rel="noopener">
+          <span class="nav-icon">↗</span> twitter
+        </a>
+        {% endif %}
+      </nav>
+
+      <div class="sidebar-status">
+        <div class="status-line">
+          <span><span class="status-dot"></span>online</span>
+          <span id="js-time">--:--:--</span>
+        </div>
+        <div class="status-line">
+          <span>uptime</span>
+          <span id="js-uptime">calculating...</span>
+        </div>
+      </div>
+
+    </aside>
+    <!-- ── /SIDEBAR ─────────────────────────────── -->
+
+    <!-- ── MAIN ─────────────────────────────────── -->
+    <main class="main-content" role="main">
+      {{ content }}
+    </main>
+    <!-- ── /MAIN ─────────────────────────────────── -->
+
+  </div><!-- /.site-wrapper -->
+
+  <script>
+    // Live clock
+    function tick() {
+      const el = document.getElementById('js-time');
+      if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Fake uptime counter
+    const start = Date.now();
+    setInterval(() => {
+      const el = document.getElementById('js-uptime');
+      if (!el) return;
+      const s = Math.floor((Date.now() - start) / 1000);
+      const h = String(Math.floor(s / 3600)).padStart(2,'0');
+      const m = String(Math.floor((s % 3600) / 60)).padStart(2,'0');
+      const sec = String(s % 60).padStart(2,'0');
+      el.textContent = `${h}:${m}:${sec}`;
+    }, 1000);
+
+    // Highlight active nav link based on scroll position
+    const sections = document.querySelectorAll('[data-section]');
+    const navItems = document.querySelectorAll('.nav-item');
+    if (sections.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navItems.forEach(a => {
+              a.classList.toggle('active', a.getAttribute('href').includes('#' + entry.target.dataset.section));
+            });
+          }
+        });
+      }, { threshold: 0.4 });
+      sections.forEach(s => observer.observe(s));
+    }
+  </script>
+
+</body>
+</html>
