@@ -102,43 +102,57 @@
 
   </div><!-- /.site-wrapper -->
 
-  <script>
-    // Live clock
-    function tick() {
-      const el = document.getElementById('js-time');
-      if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
-    }
-    tick();
-    setInterval(tick, 1000);
+<script>
+  // Live clock
+  function tick() {
+    const el = document.getElementById('js-time');
+    if (el) el.textContent = new Date().toLocaleTimeString('en-GB');
+  }
+  tick();
+  setInterval(tick, 1000);
 
-    // Fake uptime counter
-    const start = Date.now();
-    setInterval(() => {
-      const el = document.getElementById('js-uptime');
-      if (!el) return;
-      const s = Math.floor((Date.now() - start) / 1000);
-      const h = String(Math.floor(s / 3600)).padStart(2,'0');
-      const m = String(Math.floor((s % 3600) / 60)).padStart(2,'0');
-      const sec = String(s % 60).padStart(2,'0');
-      el.textContent = `${h}:${m}:${sec}`;
-    }, 1000);
+  // Uptime counter
+  const start = Date.now();
+  setInterval(() => {
+    const el = document.getElementById('js-uptime');
+    if (!el) return;
+    const s = Math.floor((Date.now() - start) / 1000);
+    const h = String(Math.floor(s / 3600)).padStart(2,'0');
+    const m = String(Math.floor((s % 3600) / 60)).padStart(2,'0');
+    const sec = String(s % 60).padStart(2,'0');
+    el.textContent = `${h}:${m}:${sec}`;
+  }, 1000);
 
-    // Highlight active nav link based on scroll position
-    const sections = document.querySelectorAll('[data-section]');
-    const navItems = document.querySelectorAll('.nav-item');
-    if (sections.length) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navItems.forEach(a => {
-              a.classList.toggle('active', a.getAttribute('href').includes('#' + entry.target.dataset.section));
-            });
-          }
-        });
-      }, { threshold: 0.4 });
-      sections.forEach(s => observer.observe(s));
-    }
-  </script>
+  // Section switching
+  const sections = ['about', 'projects', 'blog', 'contact'];
+
+  function showSection(id) {
+    sections.forEach(s => {
+      const el = document.getElementById(s);
+      if (el) el.style.display = s === id ? '' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href').includes('#' + id));
+    });
+    window.location.hash = id;
+  }
+
+  // Wire up nav clicks
+  document.querySelectorAll('.nav-item').forEach(a => {
+    const hash = a.getAttribute('href');
+    if (!hash || !hash.includes('#')) return;
+    const id = hash.split('#')[1];
+    if (!sections.includes(id)) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(id);
+    });
+  });
+
+  // Show correct section on load (from URL hash or default to about)
+  const initial = window.location.hash.replace('#', '');
+  showSection(sections.includes(initial) ? initial : 'about');
+</script>
 
 </body>
 </html>
