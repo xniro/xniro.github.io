@@ -1,45 +1,64 @@
----
----
-
+--- ---
 /* =============================================
    TERMINAL THEME — Amber on Black
    ============================================= */
 
 :root {
-  --amber:        #ffb347;
+  --amber: #ffb347;
   --amber-bright: #ffd080;
-  --amber-dim:    #c47a1e;
-  --amber-muted:  #7a4e10;
-  --bg:           #0d0d0d;
-  --bg-panel:     #111111;
-  --bg-hover:     #1a1a1a;
-  --border:       #2a2a2a;
-  --text:         #e8e0cc;
-  --text-muted:   #7a7268;
-  --text-dim:     #4a4540;
-  --green:        #5dba6e;
-  --red:          #d45f5f;
-  --font-mono:    'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
-  --sidebar-w:    260px;
+  --amber-dim: #c47a1e;
+  --amber-muted: #7a4e10;
+  --bg: #0d0d0d;
+  --bg-panel: #111111;
+  --bg-hover: #1a1a1a;
+  --border: #2a2a2a;
+  --text: #e8e0cc;
+  --text-muted: #7a7268;
+  --text-dim: #4a4540;
+  --green: #5dba6e;
+  --red: #d45f5f;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  --sidebar-w: 260px;
   --cursor-blink: blink 1.1s step-end infinite;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes scanline {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -72,13 +91,11 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.04) 2px,
-    rgba(0,0,0,0.04) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.04) 2px,
+      rgba(0, 0, 0, 0.04) 4px);
   pointer-events: none;
   z-index: 9999;
 }
@@ -125,11 +142,27 @@ body::after {
   margin-bottom: 0.75rem;
 }
 
-.prompt-user { color: var(--green); font-weight: 600; }
-.prompt-at   { color: var(--text-muted); }
-.prompt-host { color: var(--amber); font-weight: 600; }
-.prompt-sep  { color: var(--text-muted); }
-.prompt-path { color: var(--amber-dim); }
+.prompt-user {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.prompt-at {
+  color: var(--text-muted);
+}
+
+.prompt-host {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.prompt-sep {
+  color: var(--text-muted);
+}
+
+.prompt-path {
+  color: var(--amber-dim);
+}
 
 .cursor {
   display: inline-block;
@@ -175,7 +208,11 @@ body::after {
   color: var(--text-dim);
   font-size: 0.68rem;
 }
-.author-location::before { content: '📍 '; font-size: 0.6rem; }
+
+.author-location::before {
+  content: '📍 ';
+  font-size: 0.6rem;
+}
 
 /* NAV */
 .sidebar-nav {
@@ -315,7 +352,10 @@ body::after {
   line-height: 1.8;
   margin-bottom: 0.75rem;
 }
-.about-block p:last-child { margin-bottom: 0; }
+
+.about-block p:last-child {
+  margin-bottom: 0;
+}
 
 .skills-grid {
   display: flex;
@@ -421,7 +461,9 @@ body::after {
    BLOG SECTION
    ============================================= */
 
-.post-list { list-style: none; }
+.post-list {
+  list-style: none;
+}
 
 .post-item {
   display: grid;
@@ -489,8 +531,13 @@ body::after {
   transition: color 0.1s;
 }
 
-.contact-line:last-child { border-bottom: none; }
-.contact-line:hover { color: var(--amber); }
+.contact-line:last-child {
+  border-bottom: none;
+}
+
+.contact-line:hover {
+  color: var(--amber);
+}
 
 .contact-key {
   color: var(--amber-dim);
@@ -498,7 +545,9 @@ body::after {
   flex-shrink: 0;
 }
 
-.contact-val { color: var(--text); }
+.contact-val {
+  color: var(--text);
+}
 
 /* =============================================
    TYPOGRAPHY IN POSTS
@@ -510,16 +559,27 @@ body::after {
   color: var(--text);
 }
 
-.post-content h1, .post-content h2, .post-content h3 {
+.post-content h1,
+.post-content h2,
+.post-content h3 {
   color: var(--amber-bright);
   margin: 1.5rem 0 0.75rem;
   font-weight: 600;
 }
 
-.post-content h2::before { content: '## '; color: var(--amber-muted); }
-.post-content h3::before { content: '### '; color: var(--amber-muted); }
+.post-content h2::before {
+  content: '## ';
+  color: var(--amber-muted);
+}
 
-.post-content p { margin-bottom: 1rem; }
+.post-content h3::before {
+  content: '### ';
+  color: var(--amber-muted);
+}
+
+.post-content p {
+  margin-bottom: 1rem;
+}
 
 .post-content a {
   color: var(--amber);
@@ -559,6 +619,11 @@ body::after {
   margin-bottom: 1rem;
 }
 
+.author-avatar img {
+  mix-blend-mode: lighten;
+  filter: sepia(1) saturate(3) hue-rotate(5deg) brightness(0.9);
+}
+
 /* =============================================
    COMMAND ECHO
    ============================================= */
@@ -582,7 +647,9 @@ body::after {
    ============================================= */
 
 @media (max-width: 720px) {
-  .site-wrapper { flex-direction: column; }
+  .site-wrapper {
+    flex-direction: column;
+  }
 
   .sidebar {
     width: 100%;
@@ -592,14 +659,41 @@ body::after {
     border-bottom: 1px solid var(--border);
   }
 
-  .sidebar-nav { display: flex; padding: 0.5rem 0; flex-wrap: wrap; }
-  .nav-section-label { display: none; }
-  .nav-item { border-left: none; border-bottom: 2px solid transparent; padding: 0.5rem 1rem; }
-  .nav-item.active { border-left: none; border-bottom-color: var(--amber); }
-  .sidebar-status { display: none; }
+  .sidebar-nav {
+    display: flex;
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
+  }
 
-  .main-content { padding: 1.25rem 1rem; }
+  .nav-section-label {
+    display: none;
+  }
 
-  .post-item { grid-template-columns: 1fr; gap: 0.2rem; }
-  .post-excerpt { grid-column: 1; }
+  .nav-item {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-item.active {
+    border-left: none;
+    border-bottom-color: var(--amber);
+  }
+
+  .sidebar-status {
+    display: none;
+  }
+
+  .main-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .post-item {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .post-excerpt {
+    grid-column: 1;
+  }
 }
