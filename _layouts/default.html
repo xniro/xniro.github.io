@@ -135,16 +135,22 @@
     }
 
     // Wire up nav clicks
-    document.querySelectorAll('.nav-item').forEach(a => {
-      const hash = a.getAttribute('href');
-      if (!hash || !hash.includes('#')) return;
-      const id = hash.split('#')[1];
-      if (!sections.includes(id)) return;
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        showSection(id);
-      });
-    });
+document.querySelectorAll('.nav-item').forEach(a => {
+  const href = a.getAttribute('href');
+  if (!href || !href.includes('#')) return;
+  const id = href.split('#')[1];
+  if (!sections.includes(id)) return;
+
+  a.addEventListener('click', e => {
+    // If we're not on the homepage, do a full navigation
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+      window.location.href = '/' + '#' + id;
+      return;
+    }
+    e.preventDefault();
+    showSection(id);
+  });
+});
 
     // Show correct section on load (from URL hash or default to about)
     const initial = window.location.hash.replace('#', '');
